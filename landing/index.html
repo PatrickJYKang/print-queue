@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Print Queue Bot</title>
+  <style>
+    :root { --fg:#0f172a; --sub:#334155; --muted:#64748b; --bg:#f8fafc; --card:#ffffff; --accent:#2563eb; }
+    html,body { margin:0; padding:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; color:var(--fg); background:var(--bg); }
+    .wrapper { max-width: 920px; margin: 0 auto; padding: 40px 20px 80px; }
+    header { text-align:center; margin-bottom: 28px; }
+    h1 { font-size: 2.2rem; margin: 0 0 8px; }
+    .tagline { color: var(--sub); font-size: 1.05rem; }
+    .card { background: var(--card); border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin: 14px 0; box-shadow: 0 1px 1px rgba(0,0,0,0.02); }
+    h2 { font-size: 1.25rem; margin: 0 0 10px; }
+    p { line-height: 1.6; color: var(--sub); }
+    ul { color: var(--sub); line-height: 1.6; }
+    code, .pill { background:#0f172a0d; border:1px solid #0f172a1a; padding: 2px 6px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .footer { margin-top: 36px; color: var(--muted); font-size: .9rem; text-align:center; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Print Queue Bot</h1>
+      <div class="tagline">A fair, automated Discord queue for shared 3D printers</div>
+    </header>
+
+    <section class="card">
+      <h2>What is this?</h2>
+      <p>Print Queue Bot helps communities share 3D printers fairly. Users join a single queue in Discord and are notified when it’s their turn to claim a printer. The system relies on user‑reported times and predictions to schedule notifications. No hardware integrations are required.</p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>How to use</h2>
+        <ul>
+          <li>Run <code>/join job_name est_time</code> to join with your estimated print time.</li>
+          <li>When notified, run <code>/claim printer</code> to reserve a printer.</li>
+          <li>At the printer:
+            <ul>
+              <li>If the previous print is still running: <code>/notdone printer remaining_time</code> (releases your claim and reschedules your turn).</li>
+              <li>If the previous print has ended: <code>/close printer success|fail [notes] [photo]</code> (photo required for <code>fail</code>).</li>
+              <li>Then start your job: <code>/report started printer</code>.</li>
+            </ul>
+          </li>
+          <li>Use <code>/status</code> and <code>/myjobs</code> to check queue and your jobs.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Backend</h2>
+        <ul>
+          <li>ETAs and printer availability are based on your self‑reported durations.</li>
+          <li>A scheduler predicts when a printer will be free and pings the next user.</li>
+          <li>Access hours are respected: if a finish happens outside access hours, claim/start timers begin next open period.</li>
+          <li>No hardware polling or MQTT; all transitions are user‑reported via commands.</li>
+          <li>Fairness is enforced by configurable claim and start windows.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Commands at a glance</h2>
+      <ul>
+        <li><span class="pill">/join</span> add your job with an estimate</li>
+        <li><span class="pill">/claim</span> reserve a specific printer</li>
+        <li><span class="pill">/notdone</span> report previous print not finished and remaining time (releases your claim)</li>
+        <li><span class="pill">/close</span> close the previous job (success or fail; photo required for fail)</li>
+        <li><span class="pill">/report started</span> confirm you started your print</li>
+        <li><span class="pill">/status</span>, <span class="pill">/myjobs</span>, <span class="pill">/update_time</span>, <span class="pill">/cancel</span></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Installation</h2>
+      <p>(Coming soon)</p>
+    </section>
+
+    <div class="footer">Built for fairness and simplicity. Runs on a caffeinated Mac. No printer disconnects required.</div>
+  </div>
+</body>
+</html>
